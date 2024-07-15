@@ -1,0 +1,8 @@
+runtime: python310
+entrypoint: gunicorn --workers 1 --threads 8 --timeout 0 app:app
+
+handlers:
+- url: /.*
+  script: auto
+  secure: always
+  redirect_http_response_code: 301

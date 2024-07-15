@@ -1,0 +1,860 @@
+:root {
+  --primary-color: #FF6B6B;
+  --secondary-color: #4ECDC4;
+  --background-color: #292F36;
+  --text-color: #F7FFF7;
+  --accent-color: #FFE66D;
+  --terminal-bg: #000000;
+  --terminal-text: #00ff00;
+}
+
+body {
+  font-family: 'Roboto', 'VT323', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  transition: background-color 0.5s ease;
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.header {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-color);
+  text-align: center;
+  padding: 1rem 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 1rem 0 0 0;
+}
+
+nav ul li {
+  display: inline;
+  margin: 0 10px;
+}
+
+nav ul li a {
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+  color: var(--accent-color);
+}
+
+main {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.content-wrapper {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.landing-page {
+  text-align: center;
+}
+
+.project-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.project-button {
+  background-color: var(--secondary-color);
+  color: var(--background-color);
+  padding: 1rem 2rem;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  flex: 0 1 auto;
+  text-align: center;
+}
+
+.project-button:hover {
+  background-color: var(--accent-color);
+  transform: scale(1.05);
+}
+
+/* Cipher Styles */
+.cipher-block {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 2px solid var(--secondary-color);
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin: 2rem auto;
+  max-width: 800px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  animation: flicker 2s infinite;
+}
+
+.cipher-block:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+.cipher-description h2 {
+  color: var(--accent-color);
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.description {
+  font-size: 1rem;
+  color: var(--text-color);
+  opacity: 0.8;
+  margin-bottom: 1rem;
+}
+
+.cipher-inputs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+input[type="text"], select {
+  flex: 1;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-color);
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+input[type="text"]:focus, select:focus {
+  background-color: rgba(255, 255, 255, 0.2);
+  outline: none;
+}
+
+button {
+  background-color: var(--secondary-color);
+  color: var(--background-color);
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+button:hover {
+  background-color: var(--accent-color);
+  transform: scale(1.05);
+}
+
+button::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(45deg);
+  transition: all 0.3s ease;
+}
+
+button:hover::after {
+  left: 100%;
+  top: 100%;
+}
+
+.result-box {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  padding: 1rem;
+  margin-top: 1rem;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  word-break: break-all;
+  position: relative;
+  overflow: hidden;
+}
+
+.result-box::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(45deg);
+  animation: shine 3s infinite;
+}
+
+/* Customer Support Styles */
+.customer-support {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+#terminal {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border: 3px solid var(--terminal-text);
+  margin: 20px auto;
+  max-width: 600px;
+  width: 90%;
+  background-color: var(--terminal-bg);
+  color: var(--terminal-text);
+  font-family: 'VT323', monospace;
+  box-shadow: 0 0 10px var(--terminal-text), 0 0 20px var(--terminal-text) inset;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+#screen {
+  flex-grow: 1;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  padding: 10px;
+  text-align: left;
+}
+
+#startBtn {
+  background-color: var(--terminal-bg);
+  border: 2px solid var(--terminal-text);
+  color: var(--terminal-text);
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  margin: 20px 2px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  font-family: 'VT323', monospace;
+  text-transform: uppercase;
+  box-shadow: 0 0 10px var(--terminal-text);
+}
+
+#startBtn:hover {
+  background-color: var(--terminal-text);
+  color: var(--terminal-bg);
+}
+
+.blinking-cursor {
+  background-color: var(--terminal-text);
+  width: 10px;
+  height: 20px;
+  display: inline-block;
+  margin-left: 2px;
+  animation: blink 0.7s infinite;
+}
+
+.scan-line {
+  width: 100%;
+  height: 2px;
+  background-color: rgba(0, 255, 0, 0.2);
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: scan 6s linear infinite;
+}
+
+#input-area {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: var(--terminal-bg);
+  position: sticky;
+  bottom: 0;
+}
+
+#userChoice {
+  display: none;
+  width: 30px;
+  margin-left: 5px;
+  text-align: center;
+  font-size: 18px;
+  background-color: var(--terminal-bg);
+  color: var(--terminal-text);
+  border: 1px solid var(--terminal-text);
+  padding: 5px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: var(--terminal-text);
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.close-btn:hover {
+  color: #ff4444;
+}
+
+/* Project Pages Styling (Pwnagotchi, SDR, and Audio Cipher) */
+.project-page, .audio-cipher-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.project-page h1, .audio-cipher-page h1 {
+  color: var(--accent-color);
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.project-page section, .audio-cipher-page section {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.project-page section:hover, .audio-cipher-page section:hover {
+  transform: translateY(-5px);
+}
+
+.project-page h2, .audio-cipher-page h2 {
+  color: var(--secondary-color);
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  border-bottom: 2px solid var(--secondary-color);
+  padding-bottom: 5px;
+}
+
+.project-page p, .audio-cipher-page p {
+  color: var(--text-color);
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.project-page ul, .audio-cipher-page ul {
+  list-style-type: none;
+  padding-left: 20px;
+}
+
+.project-page li, .audio-cipher-page li {
+  color: var(--text-color);
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.project-page li::before, .audio-cipher-page li::before {
+  content: '▹';
+  color: var(--accent-color);
+  position: absolute;
+  left: -20px;
+}
+
+/* Specific styling for Pwnagotchi page */
+#ethical-considerations {
+  border: 2px solid var(--primary-color);
+  padding: 20px;
+  margin-top: 30px;
+  background-color: rgba(255, 107, 107, 0.1);
+}
+
+#ethical-considerations h2 {
+  color: var(--primary-color);
+}
+
+/* Specific styling for SDR page */
+#applications ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+#applications li {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+/* Specific styling for Audio Cipher page */
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
+}
+
+.video-container iframe, .video-container video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.audio-cipher-page audio, .audio-cipher-page img {
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* Footer Styles */
+footer {
+  flex-shrink: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: var(--text-color);
+  text-align: center;
+  padding: 1rem 0;
+  width: 100%;
+}
+
+footer a {
+  color: var(--accent-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+footer a:hover {
+  color: var(--secondary-color);
+  text-decoration: underline;
+}
+
+/* Animations */
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes shine {
+  0% { left: -50%; top: -50%; }
+  100% { left: 150%; top: 150%; }
+}
+
+@keyframes blink {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes flicker {
+  0% { opacity: 0.8; }
+  50% { opacity: 1; }
+  100% { opacity: 0.8; }
+}
+
+@keyframes scan {
+  0% { top: 0; }
+  100% { top: 100%; }
+}
+
+/* Project Pages Styling (Pwnagotchi and SDR) */
+.project-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.project-page h1 {
+  color: var(--accent-color);
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.project-page section {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.project-page section:hover {
+  transform: translateY(-5px);
+}
+
+.project-page h2 {
+  color: var(--secondary-color);
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  border-bottom: 2px solid var(--secondary-color);
+  padding-bottom: 5px;
+}
+
+.project-page p {
+  color: var(--text-color);
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.project-page ul {
+  list-style-type: none;
+  padding-left: 20px;
+}
+
+.project-page li {
+  color: var(--text-color);
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.project-page li::before {
+  content: '▹';
+  color: var(--accent-color);
+  position: absolute;
+  left: -20px;
+}
+
+/* Specific styling for Pwnagotchi page */
+#ethical-considerations {
+  border: 2px solid var(--primary-color);
+  padding: 20px;
+  margin-top: 30px;
+  background-color: rgba(255, 107, 107, 0.1);
+}
+
+#ethical-considerations h2 {
+  color: var(--primary-color);
+}
+
+/* Specific styling for SDR page */
+#applications ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+#applications li {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+/* Media Queries */
+@media (max-width: 600px) {
+  .cipher-inputs {
+    flex-direction: column;
+  }
+
+  input[type="text"], select, button {
+    width: 100%;
+  }
+
+  .project-button {
+    width: 100%;
+  }
+
+  #terminal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transform: none;
+    max-height: none;
+    width: 100%;
+  }
+
+  #input-area {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--terminal-bg);
+  }
+
+  .project-page {
+    padding: 10px;
+  }
+
+  .project-page h1 {
+    font-size: 2rem;
+  }
+
+  .project-page h2 {
+    font-size: 1.5rem;
+  }
+
+  #applications ul {
+    grid-template-columns: 1fr;
+  }
+
+  footer a {
+    color: var(--accent-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  footer a:hover {
+    color: var(--secondary-color);
+    text-decoration: underline;
+  }
+
+  .audio-cipher-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  .audio-cipher-page h1 {
+    color: var(--accent-color);
+    text-align: center;
+  }
+
+  .audio-cipher-page section {
+    margin-bottom: 30px;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+  }
+
+  .audio-cipher-page h2 {
+    color: var(--secondary-color);
+    border-bottom: 2px solid var(--secondary-color);
+    padding-bottom: 5px;
+  }
+
+  .video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+  }
+
+  .video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .audio-cipher-page audio, .audio-cipher-page img {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  pre {
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+
+/* Audio Cipher Analysis Styles */
+.analysis-nav {
+  margin-bottom: 30px;
+}
+
+.analysis-nav ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.analysis-nav li a {
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.analysis-nav li a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+#spectral-analysis,
+#steganography-investigation,
+#frequency-manipulation,
+#decoding-algorithms,
+#envelope-analysis,
+#lsb-analysis,
+#mel-frequency,
+#mfcc-analysis,
+#onset-analysis,
+#time-frequency-waveform {
+  margin-bottom: 40px;
+}
+
+/* Existing styles */
+/* Password Checker Styles */
+.password-checker-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.password-checker-container h1 {
+    color: #ffffff;
+    margin-bottom: 1rem;
+}
+
+.password-checker-container p {
+    color: #e0e0e0;
+    margin-bottom: 1.5rem;
+}
+
+.password-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.password-input {
+    width: 100%;
+    max-width: 300px;
+    padding: 0.5rem;
+    margin: 20px auto;
+    border: none;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+}
+
+.check-password-button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    background: #4CAF50;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 20px;
+}
+
+.check-password-button:hover {
+    background: #45a049;
+}
+
+#result {
+    margin-top: 2rem;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    text-align: left;
+}
+
+#result h2, #result h3 {
+    color: #ffffff;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+#result p {
+    color: #e0e0e0;
+    margin-bottom: 0.5rem;
+}
+
+#advice, #result ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+#advice li, #result ul li {
+    color: #e0e0e0;
+    margin-bottom: 0.5rem;
+}
+
+#strength-scenario {
+    text-align: center;
+}
+
+#strength-scenario svg {
+    display: block;
+    margin: 20px auto;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#full-result {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 20px;
+    word-break: break-word;
+}

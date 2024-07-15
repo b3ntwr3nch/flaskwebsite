@@ -1,0 +1,216 @@
+{% extends "base.html" %}
+
+{% block title %}bentwrench - Home{% endblock %}
+
+{% block extra_head %}
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <style>
+        /* Ensure the terminal is hidden by default */
+        #terminal {
+            display: none;
+        }
+        #input-area {
+            display: none;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="page-container">
+        <main>
+            <div class="content-wrapper">
+                <h2>Welcome to My Tech Playground</h2>
+                <p>Explore various projects and tools:</p>
+                <div class="project-links">
+                    <a href="{{ url_for('ciphers') }}" class="project-button">Cipher Tools</a>
+                    <a href="{{ url_for('pwnagotchi') }}" class="project-button">Pwnagotchi Project</a>
+                    <a href="{{ url_for('sdr') }}" class="project-button">SDR Project</a>
+                    <a href="{{ url_for('audio_cipher') }}" class="project-button">Audio Cipher</a>
+                    <a href="{{ url_for('password_checker') }}" class="project-button">Password Checker</a>
+                </div>
+
+                <div class="customer-support">
+                    <button id="startBtn">Contact Customer Support</button>
+                    <div id="terminal">
+                        <button id="closeBtn" class="close-btn">&times;</button>
+                        <div class="scan-line"></div>
+                        <div id="screen"></div>
+                        <div id="input-area">
+                            <div id="cursor" class="blinking-cursor">_</div>
+                            <input type="number" id="userChoice" min="1" max="4">
+                        </div>
+                    </div>
+                </div>
+        </main>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+    $(document).ready(function() {
+        const terminal = document.getElementById('terminal');
+        const screen = document.getElementById('screen');
+        const userChoiceInput = document.getElementById('userChoice');
+
+        $('#startBtn').on('click', function() {
+            terminal.style.display = 'flex';
+            terminal.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            screen.innerHTML = '';
+            $('#input-area').hide();
+
+            const messages = [
+                "INITIATING CUSTOMER SUPPORT PROTOCOL...\n",
+                "LOADING MS-DOS 6.22\n",
+                "HIMEM is testing extended memory...\n",
+                "LOADING CUSTOMER_SUPPORT.EXE...\n",
+                "INITIALIZING FLUX CAPACITOR...\n",
+                "CHARGING 1.21 GIGAWATTS...\n",
+                "REVERSING POLARITY OF NEUTRON FLOW...\n",
+                "HACKING THE puvjk MAINFRAME...\n",
+                "RETICULATING SPLINES...\n",
+                "COMPRESSING LUDICROUS SPEED...\n",
+                "WARMING UP THE TUBE AMPLIFIERS...\n",
+                "TUNING IN TO RADIO FREE EUROPE...\n",
+                "INITIALIZING ACOUSTIC COUPLER...\n",
+                "CALCULATING FASTER-THAN-LIGHT COMMS EQUATION...\n",
+                "DIALING SUPPORT HOTLINE...\n",
+                "CONNECTING AT 9600 BAUD...\n",
+                "NEGOTIATING HANDSHAKE...\n"
+            ];
+
+            function typeWriter(text, index = 0, callback = null) {
+                if (index < text.length) {
+                    screen.innerHTML += text.charAt(index);
+                    index++;
+                    screen.scrollTop = screen.scrollHeight;
+                    setTimeout(() => typeWriter(text, index, callback), Math.random() * 10 + 5);  // Faster typing
+                } else if (callback) {
+                    callback();
+                }
+            }
+
+            function processMessages(i = 0) {
+                if (i < messages.length) {
+                    if (messages[i].includes("CALCULATING FASTER-THAN-LIGHT COMMS EQUATION...\n")) {
+                        typeWriter(messages[i], 0, () => {
+                            setTimeout(() => {
+                                const ftlFormula = `
+FASTER-THAN-LIGHT COMMUNICATION FORMULA:
+v = c √(1 + 2Φ / mc² (1 + Λ / hν))
+
+v = velocity (FTL speed)
+c = speed of light
+Φ = exotic matter energy density
+m = mass of tachyons
+Λ = quantum entanglement constant
+h = Planck's constant (6.626 × 10^-34 joule seconds)
+ν = frequency of the warp field oscillation (hertz)
+
+NOTE: FASTER-THAN-LIGHT COMMUNICATION MAY CAUSE TEMPORAL
+PARADOXES AND SPONTANEOUS EXISTENTIAL CRISES. USE AT
+YOUR OWN RISK. UNAUTHORIZED USE MAY RESULT IN
+UNIVERSES, OR OTHER UNEXPECTED PHENOMENA. CONSULT
+YOUR LOCAL TIME TRAVEL REGULATION AUTHORITY BEFORE
+ATTEMPTING ANY INTERSTELLAR COMMUNICATION.
+
+    `;
+                                typeWriter(ftlFormula, 0, () => setTimeout(() => processMessages(i + 1), 500));
+                            }, 200);
+                        });
+                    } else {
+                        typeWriter(messages[i], 0, () => {
+                            setTimeout(() => processMessages(i + 1), 100);  // Faster message processing
+                        });
+                    }
+                } else {
+                    simulateConnectionAttempts();
+                }
+            }
+
+            function simulateConnectionAttempts(attempt = 1) {
+                if (attempt <= 7) {
+                    let attemptMessage = `ATTEMPT ${attempt}: ESTABLISHING CONNECTION...\n`;
+                    if (attempt % 2 === 0) {
+                        const errors = [
+                            "ERROR 404: COFFEE_NOT_FOUND\n",
+                            "ERROR 418: I'M A TEAPOT\n",
+                            "ERROR 42: MEANING OF LIFE NOT COMPUTED\n",
+                            "ERROR 56K: MODEM TOO FAST, PLEASE SLOW DOWN\n",
+                            "ERROR 1337: TOO MUCH L33T SPEAK\n",
+                            "ERROR 69: 4TH PYLON\n",
+                            "ERROR 007: DUALISM-DESTRUCT\n"
+                        ];
+                        attemptMessage += errors[Math.floor(Math.random() * errors.length)];
+                    }
+                    typeWriter(attemptMessage, 0, () => {
+                        setTimeout(() => simulateConnectionAttempts(attempt + 1), 500);  // Faster attempts
+                    });
+                } else {
+                    setTimeout(() => {
+                        const coffeeArt = `
+   ( (    ) )
+    ) )  ( (
+  ............
+ [           ]
+ |  COFFEE   |
+ |           |
+ |           ]
+  '.......... '
+
+ALERT: CUSTOMER SERVICE TECHNICIANS
+CURRENTLY UNAVAILABLE
+REASON: CRITICAL COFFEE BREAK
+ETA: AFTER COFFEE KICKS IN
+
+WOULD YOU LIKE TO:
+[1] LEAVE A MESSAGE
+[2] TRY INTERPRETIVE DANCE
+[3] CONSULT THE MAGIC 8 BALL
+[4] GIVE UP AND MAKE YOUR OWN COFFEE
+
+PLEASE ENTER YOUR CHOICE (1-4):`;
+                        typeWriter(coffeeArt, 0, () => {
+                            $('#input-area').show();
+                            $('#userChoice').show().focus();
+                        });
+                    }, 750);
+                }
+            }
+
+            function handleUserChoice() {
+                $('#input-area').hide();
+                $('#userChoice').hide();
+                const choice = userChoiceInput.value;
+                let response = "\n\n";
+                switch (choice) {
+                    case '1':
+                        response += "MESSAGE RECORDED ON FLOPPY DISK. ESTIMATED RESPONSE TIME: 6-8 WEEKS VIA CARRIER PIGEON.";
+                        break;
+                    case '2':
+                        response += "INTERPRETIVE DANCE DETECTED. UNFORTUNATELY, OUR DANCE INTERPRETER IS ON VACATION IN MIME SCHOOL.";
+                        break;
+                    case '3':
+                        response += "MAGIC 8 BALL SAYS: 'ASK AGAIN AFTER Y2K'.";
+                        break;
+                    case '4':
+                        response += "WISE CHOICE. COFFEE IS THE ANSWER TO EVERYTHING. EXCEPT DECAF. DECAF IS JUST HOT BEAN WATER.";
+                        break;
+                    default:
+                        response += "INVALID INPUT. SYSTEM ASSUMES YOU SPILLED COFFEE ON KEYBOARD. PLEASE CLEAN UP AND TRY AGAIN LATER.";
+                }
+                typeWriter(response + "\n\nCONNECTION TERMINATED. HAVE A FUNKY DAY!");
+            }
+
+            userChoiceInput.addEventListener('change', handleUserChoice);
+
+            processMessages();
+        });
+
+        $('#closeBtn').on('click', function() {
+            $('#terminal').hide();
+        });
+    });
+    </script>
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,78 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funky Cipher Tool</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <header class="header">
+        <h1>Funky Cipher Tool</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('ciphers') }}">Ciphers</a></li>
+                <li><a href="{{ url_for('pwnagotchi') }}">Pwnagotchi</a></li>
+                <li><a href="{{ url_for('sdr') }}">SDR</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% for cipher in ['rot13', 'emoji', 'binary', 'vigenere', 'caesar', 'atbash', 'affine', 'rail_fence', 'columnar_transposition'] %}
+        <div class="cipher-block">
+            <div class="cipher-description">
+                <h2>{{ cipher | title }} Cipher</h2>
+                <p class="description">{{ descriptions[cipher] | safe }}</p>
+            </div>
+            <form class="cipher-form" data-cipher="{{ cipher }}">
+                <div class="cipher-inputs">
+                    <input type="text" name="input_{{ cipher }}" placeholder="Enter text" value="{{ request.form.get('input_' + cipher, '') }}" aria-label="{{ cipher | title }} input">
+
+                    {% if cipher in ['vigenere', 'affine', 'columnar_transposition', 'caesar', 'rail_fence'] %}
+                    <input type="text" name="key_{{ cipher }}" placeholder="Enter key" value="{{ keys.get(cipher, '') }}" aria-label="{{ cipher | title }} key">
+                    {% endif %}
+
+                    <select name="operation_{{ cipher }}" aria-label="{{ cipher | title }} operation">
+                        <option value="encode">Encode</option>
+                        <option value="decode">Decode</option>
+                    </select>
+
+                    <button type="submit" aria-label="Submit {{ cipher | title }} cipher">Encrypt/Decrypt</button>
+                </div>
+            </form>
+            <div class="result-box" id="result_{{ cipher }}" aria-live="polite">Result will appear here.</div>
+        </div>
+        {% endfor %}
+    </main>
+
+
+    <script>
+    $(document).ready(function() {
+        $('.cipher-form').on('submit', function(event) {
+            event.preventDefault();
+            var $form = $(this);
+            var cipherName = $form.data('cipher');
+
+            $.ajax({
+                type: 'POST',
+                url: '{{ url_for("ciphers") }}',
+                data: $form.serialize() + '&cipher_name=' + cipherName,
+                success: function(response) {
+                    $('#result_' + cipherName).text(response[cipherName]);
+                },
+                error: function(xhr) {
+                    console.error("Error: " + xhr.statusText);
+                }
+            });
+        });
+    });
+    </script>
+</body>
+</html>

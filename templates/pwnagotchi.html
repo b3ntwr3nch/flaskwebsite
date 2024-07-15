@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Pwnagotchi Project{% endblock %}
+
+{% block content %}
+<div class="project-page">
+    <h1>Pwnagotchi Project</h1>
+
+    <section id="what-is-pwnagotchi">
+        <h2>What is Pwnagotchi?</h2>
+        <p>Pwnagotchi is an AI-powered device that learns from its environment to maximize the crackable WPA key material it captures. It's a combination of hardware and software, typically running on a Raspberry Pi Zero W, with an e-paper display for status updates.</p>
+    </section>
+
+    <section id="origins">
+        <h2>Origins and Inspiration</h2>
+        <p>Inspired by the Tamagotchi digital pets of the 1990s, Pwnagotchi was created by security researchers to gamify the process of capturing Wi-Fi handshakes. It was developed with the goal of exploring machine learning in Wi-Fi security.</p>
+    </section>
+
+    <section id="how-it-works">
+        <h2>How It Works</h2>
+        <p>Pwnagotchi operates in two modes: AUTO and MANU. In AUTO mode, it uses machine learning to optimize its strategies for capturing handshakes. In MANU mode, it allows for manual control and customization. The device continuously learns and adapts its behavior to maximize its effectiveness.</p>
+    </section>
+
+    <section id="my-setup">
+        <h2>My Pwnagotchi Setup</h2>
+        <p>My Pwnagotchi setup consists of a Raspberry Pi Zero W, a waveshare 2.13 inch e-paper display, and a 3D printed case. I've customized the UI and trained my Pwnagotchi to be particularly effective in urban environments.</p>
+    </section>
+
+    <section id="ethical-considerations">
+        <h2>Ethical Considerations</h2>
+        <p>It's crucial to note that Pwnagotchi is a tool for educational and research purposes only. Using it to access networks without permission is illegal and unethical. Always practice responsible use and respect others' privacy and property.</p>
+    </section>
+</div>
+{% endblock %}

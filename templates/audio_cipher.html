@@ -1,0 +1,237 @@
+{% extends "base.html" %}
+
+{% block title %}Audio Cipher Challenge{% endblock %}
+
+{% block content %}
+<div class="audio-cipher-page">
+    <h1>Audio Cipher Challenge</h1>
+    
+    <section id="introduction">
+        <h2>Introduction</h2>
+        <p>This document provides a comprehensive guide to extracting and analyzing the audio from a video file. It details the use of specific software tools to handle file conversions and manipulations, emphasizing the importance of each step in the context of audio analysis.</p>
+    </section>
+
+    <section id="tools-and-libraries">
+        <h2>Tools and Libraries</h2>
+        <ul>
+            <li><strong>FFmpeg:</strong> A powerful multimedia framework used to record, convert, and stream audio and video.</li>
+            <li><strong>Python:</strong> Employed here for scripting to automate and extract metadata from audio files.</li>
+        </ul>
+    </section>
+
+    <section id="original-video">
+        <h2>Original Video File</h2>
+        <p>The original video file is embedded below for quick access and reference. This helps ensure that the correct file is being processed throughout this documentation.</p>
+        <video width="100%" controls>
+            <source src="{{ url_for('static', filename='video/video.mp4') }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </section>
+
+    <section id="video-info">
+        <h2>Video Information Retrieval</h2>
+        <p>Extracting metadata from the video file provides crucial information such as video length, format, and audio stream characteristics, which are necessary for accurate processing and analysis.</p>
+        <pre style="max-width: 100%; overflow-x: auto;"><code>ffmpeg -i "/Users/test/Downloads/video.mp4"</code></pre>
+        <h3>Output</h3>
+        <pre style="max-width: 100%; overflow-x: auto;"><code>
+ffmpeg version 7.0 Copyright (c) 2000-2024 the FFmpeg developers
+  built with Apple clang version 15.0.0 (clang-1500.3.9.4)
+  configuration: --prefix=/opt/homebrew/Cellar/ffmpeg/7.0 --enable-shared --enable-pthreads --enable-version3 --cc=clang --host-cflags= --host-ldflags='-Wl,-ld_classic' --enable-ffplay --enable-gnutls --enable-gpl --enable-libaom --enable-libaribb24 --enable-libbluray --enable-libdav1d --enable-libharfbuzz --enable-libjxl --enable-libmp3lame --enable-libopus --enable-librav1e --enable-librist --enable-librubberband --enable-libsnappy --enable-libsrt --enable-libssh --enable-libsvtav1 --enable-libtesseract --enable-libtheora --enable-libvidstab --enable-libvmaf --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxml2 --enable-libxvid --enable-lzma --enable-libfontconfig --enable-libfreetype --enable-frei0r --enable-libass --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libopenjpeg --enable-libopenvino --enable-libspeex --enable-libsoxr --enable-libzmq --enable-libzimg --disable-libjack --disable-indev=jack --enable-videotoolbox --enable-audiotoolbox --enable-neon
+  libavutil      59.  8.100 / 59.  8.100
+  libavcodec     61.  3.100 / 61.  3.100
+  libavformat    61.  1.100 / 61.  1.100
+  libavdevice    61.  1.100 / 61.  1.100
+  libavfilter    10.  1.100 / 10.  1.100
+  libswscale      8.  1.100 /  8.  1.100
+  libswresample   5.  1.100 /  5.  1.100
+  libpostproc    58.  1.100 / 58.  1.100
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from '/Users/test/Downloads/video.mp4':
+  Metadata:
+    major_brand     : isom
+    minor_version   : 512
+    compatible_brands: isomiso2avc1mp41
+    encoder         : Lavf58.45.100
+  Duration: 00:02:07.55, start: 0.000000, bitrate: 1436 kb/s
+  Stream #0:0[0x1](und): Video: h264 (Main) (avc1 / 0x31637661), yuv420p(progressive), 2400x720 [SAR 1:1 DAR 10:3], 1310 kb/s, 30 fps, 30 tbr, 15360 tbn (default)
+      Metadata:
+        handler_name    : VideoHandler
+        vendor_id       : [0][0][0][0]
+  Stream #0:1[0x2](und): Audio: aac (LC) (mp4a / 0x6134706D), 44100 Hz, stereo, fltp, 117 kb/s (default)
+      Metadata:
+        handler_name    : SoundHandler
+        vendor_id       : [0][0][0][0]
+        </code></pre>
+    </section>
+
+    <section id="aac-to-wav">
+        <h2>Why AAC to WAV Conversion?</h2>
+        <p><strong>AAC (Advanced Audio Coding)</strong> is a lossy audio compression format known for its efficiency, especially compared to MP3. However, for precise audio analysis and manipulation, a lossless format like <strong>WAV (Waveform Audio File Format)</strong> is preferred because it preserves the original audio without any data loss. This conversion is crucial for maintaining the integrity of the audio during detailed analyses.</p>
+    </section>
+
+    <section id="audio-extraction">
+        <h2>Audio Extraction from Video</h2>
+        <p>This step involves extracting the audio stream in its original format (AAC) from the video without altering any of its properties, ensuring the purity of the data for subsequent analysis.</p>
+        <pre><code>ffmpeg -i "/Users/test/Downloads/video.mp4" -vn -acodec copy "/Users/test/Downloads/output_audio.aac"</code></pre>
+        <h3>Extracted Audio File</h3>
+        <audio controls>
+            <source src="{{ url_for('static', filename='audio/output_audio_new 1.aac') }}" type="audio/aac">
+            Your browser does not support the audio element.
+        </audio>
+    </section>
+
+    <section id="audio-metadata">
+        <h2>Audio Metadata Retrieval</h2>
+        <p>Extracting metadata using Python helps automate the process of gathering important audio details like duration and sample rate, which are vital for setup in further processing tasks.</p>
+        <pre><code>
+import subprocess
+import json
+
+def get_audio_metadata(audio_path):
+    cmd = [
+        'ffprobe', '-v', 'error',
+        '-show_entries', 'format=duration:stream=sample_rate,channels',
+        '-of', 'json',
+        audio_path
+    ]
+    result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    if result.stderr:
+        print("Error:", result.stderr)
+    try:
+        return json.loads(result.stdout)
+    except json.JSONDecodeError:
+        return "Failed to decode JSON output."
+
+audio_path = "/Users/test/Desktop/Audio cipher/output_audio_new.aac"
+metadata = get_audio_metadata(audio_path)
+print(json.dumps(metadata, indent=4))
+        </code></pre>
+        <h3>Output</h3>
+        <pre><code>
+{
+    "format": {
+        "duration": "118.120417",
+        "sample_rate": "44100",
+        "channels": 2
+    }
+}
+        </code></pre>
+    </section>
+
+    <section id="aac-to-wav-conversion">
+        <h2>AAC to WAV Conversion</h2>
+        <p>The following command converts the AAC audio to a WAV file. This step is crucial to avoid lossy compression artifacts interfering with the analysis.</p>
+        <pre><code>ffmpeg -i "/Users/test/Desktop/Audio cipher/output_audio_new.aac" -acodec pcm_s16le -ac 2 "/Users/test/Desktop/Audio cipher/stereo_combined.wav"</code></pre>
+        <h3>Stereo WAV File</h3>
+        <audio controls>
+            <source src="{{ url_for('static', filename='audio/stereo_combined.wav') }}" type="audio/wav">
+            Your browser does not support the audio element.
+        </audio>
+    </section>
+
+    <section id="channel-separation">
+        <h2>Channel Separation</h2>
+        <p>For detailed audio analysis, it is often necessary to examine each stereo channel independently, as they might carry different information or characteristics important for the analysis.</p>
+        <h3>Left Channel Extraction</h3>
+        <pre><code>ffmpeg -i "/Users/test/Desktop/Audio cipher/stereo_combined.wav" -af "pan=mono|c0=c0" -acodec pcm_s16le "/Users/test/Desktop/Audio cipher/mono_left.wav"</code></pre>
+        <audio controls>
+            <source src="{{ url_for('static', filename='audio/mono_left.wav') }}" type="audio/wav">
+            Your browser does not support the audio element.
+        </audio>
+        <h3>Right Channel Extraction</h3>
+        <pre><code>ffmpeg -i "/Users/test/Desktop/Audio cipher/stereo_combined.wav" -af "pan=mono|c0=c1" -acodec pcm_s16le "/Users/test/Desktop/Audio cipher/mono_right.wav"</code></pre>
+        <audio controls>
+            <source src="{{ url_for('static', filename='audio/mono_right.wav') }}" type="audio/wav">
+            Your browser does not support the audio element.
+        </audio>
+    </section>
+
+    <section id="audio-analysis">
+    <h2>Audio Analysis</h2>
+    <nav class="analysis-nav">
+        <ul>
+            <li><a href="#spectral-analysis">Spectral Analysis</a></li>
+            <li><a href="#steganography-investigation">Steganography Investigation</a></li>
+            <li><a href="#frequency-manipulation">Frequency Manipulation</a></li>
+            <li><a href="#decoding-algorithms">Decoding Algorithms</a></li>
+            <li><a href="#envelope-analysis">Envelope Analysis</a></li>
+            <li><a href="#lsb-analysis">LSB Analysis</a></li>
+            <li><a href="#mel-frequency">Mel Frequency</a></li>
+            <li><a href="#mfcc-analysis">MFCC Analysis</a></li>
+            <li><a href="#onset-analysis">Onset Analysis</a></li>
+            <li><a href="#time-frequency-waveform">Time Frequency Waveform</a></li>
+        </ul>
+    </nav>
+
+    <section id="spectral-analysis">
+        <h3>Spectral Analysis</h3>
+        <!-- Spectral analysis visualizations and findings -->
+    </section>
+
+    <section id="steganography-investigation">
+        <h3>Steganography Investigation</h3>
+        <!-- Steganography investigation visualizations and findings -->
+    </section>
+
+    <section id="frequency-manipulation">
+        <h3>Frequency Manipulation</h3>
+        <!-- Frequency manipulation visualizations and findings -->
+    </section>
+
+    <section id="decoding-algorithms">
+        <h3>Decoding Algorithms</h3>
+        <!-- Decoding algorithms visualizations and findings -->
+    </section>
+
+    <section id="envelope-analysis">
+        <h3>Envelope Analysis</h3>
+        <!-- Envelope analysis visualizations and findings -->
+    </section>
+
+    <section id="lsb-analysis">
+        <h3>LSB Analysis</h3>
+        <!-- LSB analysis visualizations and findings -->
+    </section>
+
+    <section id="mel-frequency">
+        <h3>Mel Frequency</h3>
+        <!-- Mel Frequency visualizations and findings -->
+    </section>
+
+    <section id="mfcc-analysis">
+        <h3>MFCC Analysis</h3>
+        <!-- MFCC analysis visualizations and findings -->
+    </section>
+
+    <section id="onset-analysis">
+        <h3>Onset Analysis</h3>
+        <!-- Onset analysis visualizations and findings -->
+    </section>
+
+    <section id="time-frequency-waveform">
+        <h3>Time Frequency Waveform</h3>
+        <!-- Time Frequency Waveform visualizations and findings -->
+    </section>
+</section>
+
+    <section id="glossary">
+        <h2>Glossary of Terms</h2>
+        <ul>
+            <li><strong>AAC:</strong> Advanced Audio Coding, a standard for lossy digital audio compression.</li>
+            <li><strong>WAV:</strong> Waveform Audio File Format, a standard for storing an audio bitstream on PCs.</li>
+            <li><strong>FFmpeg:</strong> A multimedia framework capable of decoding, encoding, transcoding, muxing, demuxing, streaming, filtering, and playing almost anything that humans and machines have created.</li>
+        </ul>
+    </section>
+
+    <section id="next-steps">
+        <h2>Next Steps</h2>
+        <p>Our next steps in analyzing this audio cipher will include:</p>
+        <ul>
+            <li>Spectral analysis of the audio files</li>
+            <li>Investigating potential steganography techniques</li>
+            <li>Exploring frequency manipulation and hidden patterns</li>
+            <li>Applying various decoding algorithms</li>
+        </ul>
+        <p>Stay tuned for updates as we delve deeper into this audio cipher challenge!</p>
+    </section>
+</div>
+{% endblock %}

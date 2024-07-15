@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ cipher_name }} Cipher</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h1>{{ cipher_name }} Cipher</h1>
+    <form method="post">
+        <label for="input_text">Input:</label>
+        <input type="text" id="input_text" name="input_text" value="{{ input_text }}">
+        <button type="submit">Encode/Decode</button>
+    </form>
+    <p>Output:</p>
+    <p>{{ output_text }}</p>
+    <a href="/">Back to home</a>
+</body>
+</html>

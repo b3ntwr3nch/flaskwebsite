@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}bentwrench{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <header class="header">
+        <h1>bentwrench</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('ciphers') }}">Ciphers</a></li>
+                <li><a href="{{ url_for('pwnagotchi') }}">Pwnagotchi</a></li>
+                <li><a href="{{ url_for('sdr') }}">SDR</a></li>
+                <li><a href="{{ url_for('audio_cipher') }}">Audio Cipher</a></li>
+                <li><a href="{{ url_for('password_checker') }}">Password Checker</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    {% block content %}{% endblock %}
+
+    <footer>
+        <p>&copy; 2024 bentwrench. All rights reserved.
+           <a href="https://www.instagram.com/bretzelbytes/" target="_blank" rel="noopener noreferrer">
+               <i class="fab fa-instagram"></i> Follow us on Instagram
+           </a>
+        </p>
+    </footer>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>
