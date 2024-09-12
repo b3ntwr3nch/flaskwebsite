@@ -5,12 +5,36 @@ import nltk
 from nltk.corpus import words
 import random
 from flask import Flask, render_template, request, jsonify, redirect, url_for
-from google.cloud import firestore
 
-nltk.download('words', quiet=True)
+class MockDatabase:
+    def collection(self, name):
+        return self
 
+    def document(self, doc_id):
+        return self
+
+    def set(self, data):
+        pass
+
+    def get(self):
+        return self
+
+    def to_dict(self):
+        return {}
+
+if os.getenv('FLASK_ENV') == 'production':
+    from google.cloud import firestore
+    db = firestore.Client()
+else:
+    db = MockDatabase()
+
+if os.getenv('GAE_ENV', '').startswith('standard'):
+    nltk.data.path.append("/tmp")
+    nltk.download('words', download_dir="/tmp")
+else:
+
+    nltk.download('words', quiet=True)
 app = Flask(__name__)
-db = firestore.Client()
 
 def rot13_cipher(text, key=None, decode=False):
     return text.translate(str.maketrans(
@@ -68,7 +92,6 @@ def rail_fence_cipher(text, key, decode=False):
         return "Invalid number of rails. Must be at least 2."
 
     if not decode:
-        # Encryption
         fence = [[None for _ in range(len(text))] for _ in range(rails)]
         rail = 0
         direction = 1
@@ -79,7 +102,6 @@ def rail_fence_cipher(text, key, decode=False):
                 direction *= -1
         return ''.join(char for rail in fence for char in rail if char is not None)
     else:
-        # Decryption
         fence = [[None for _ in range(len(text))] for _ in range(rails)]
         rail = 0
         direction = 1
@@ -110,13 +132,11 @@ def columnar_transposition_cipher(text, key, decode=False):
     key_order = sorted(range(len(key)), key=lambda k: key[k])
 
     if not decode:
-        # Encryption
         cols = [''] * len(key)
         for i, char in enumerate(text):
             cols[key_order[i % len(key)]] += char
         return ''.join(cols)
     else:
-        # Decryption
         cols = [''] * len(key)
         rows, remainder = divmod(len(text), len(key))
         for i in range(len(key)):
@@ -155,11 +175,8 @@ def vigenere_cipher(text, key, decode=False):
     i = 0
     for char in text:
         if char.isalpha():
-            # Determine the shift
             shift = key_as_int[i % key_length]
-            # Determine the ASCII offset (65 for uppercase, 97 for lowercase)
             ascii_offset = 65 if char.isupper() else 97
-            # Apply the cipher
             if decode:
                 result += chr((ord(char) - ascii_offset - shift) % 26 + ascii_offset)
             else:
@@ -302,20 +319,19 @@ def ciphers():
         return render_template('ciphers.html', keys=keys, descriptions=descriptions, results=results)
 
 
-# Placeholder routes for future pages
 @app.route('/pwnagotchi')
 def pwnagotchi():
     return render_template('pwnagotchi.html')
 
 
-@app.route('/sdr')
-def sdr():
-    return render_template('sdr.html')
+@app.route('/robotics_microcontroller')
+def robotics_microcontroller():
+    return render_template('robotics_microcontroller.html')
 
 
-@app.route('/audio_cipher')
-def audio_cipher():
-    return render_template('audio_cipher.html')
+@app.route('/cipher_saturday')
+def cipher_saturday():
+    return render_template('cipher_saturday.html')
 
 
 import math
@@ -330,7 +346,6 @@ def calculate_entropy(password):
     return len(password) * math.log2(94)  # Assuming 94 printable ASCII characters
 
 def estimate_crack_time(entropy):
-    # Assuming 1 billion guesses per second
     guesses = 2 ** entropy
     seconds = guesses / 1_000_000_000
 
@@ -474,4 +489,5 @@ def password_checker():
     return render_template('password_checker.html')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8888)
+    port = int(os.environ.get("PORT", 8888))
+    app.run(host='127.0.0.1', port=port, debug=True)

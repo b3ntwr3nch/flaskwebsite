@@ -111,7 +111,6 @@ main {
   transform: scale(1.05);
 }
 
-/* Cipher Styles */
 .cipher-block {
   background-color: rgba(255, 255, 255, 0.1);
   border: 2px solid var(--secondary-color);
@@ -234,7 +233,6 @@ button:hover::after {
   animation: shine 3s infinite;
 }
 
-/* Customer Support Styles */
 .customer-support {
   text-align: center;
   margin-top: 2rem;
@@ -348,7 +346,6 @@ button:hover::after {
   color: #ff4444;
 }
 
-/* Project Pages Styling (Pwnagotchi, SDR, and Audio Cipher) */
 .project-page, .audio-cipher-page {
   max-width: 800px;
   margin: 0 auto;
@@ -413,7 +410,6 @@ button:hover::after {
   left: -20px;
 }
 
-/* Specific styling for Pwnagotchi page */
 #ethical-considerations {
   border: 2px solid var(--primary-color);
   padding: 20px;
@@ -425,7 +421,6 @@ button:hover::after {
   color: var(--primary-color);
 }
 
-/* Specific styling for SDR page */
 #applications ul {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -439,10 +434,9 @@ button:hover::after {
   text-align: center;
 }
 
-/* Specific styling for Audio Cipher page */
 .video-container {
   position: relative;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  padding-bottom: 56.25%;
   height: 0;
   overflow: hidden;
 }
@@ -460,7 +454,6 @@ button:hover::after {
   margin-top: 10px;
 }
 
-/* Footer Styles */
 footer {
   flex-shrink: 0;
   background-color: rgba(0, 0, 0, 0.5);
@@ -481,7 +474,6 @@ footer a:hover {
   text-decoration: underline;
 }
 
-/* Animations */
 @keyframes gradientBG {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -510,7 +502,6 @@ footer a:hover {
   100% { top: 100%; }
 }
 
-/* Project Pages Styling (Pwnagotchi and SDR) */
 .project-page {
   max-width: 800px;
   margin: 0 auto;
@@ -575,7 +566,6 @@ footer a:hover {
   left: -20px;
 }
 
-/* Specific styling for Pwnagotchi page */
 #ethical-considerations {
   border: 2px solid var(--primary-color);
   padding: 20px;
@@ -587,7 +577,6 @@ footer a:hover {
   color: var(--primary-color);
 }
 
-/* Specific styling for SDR page */
 #applications ul {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -601,7 +590,6 @@ footer a:hover {
   text-align: center;
 }
 
-/* Media Queries */
 @media (max-width: 600px) {
   .cipher-inputs {
     flex-direction: column;
@@ -713,7 +701,6 @@ footer a:hover {
   }
 
 
-/* Audio Cipher Analysis Styles */
 .analysis-nav {
   margin-bottom: 30px;
 }
@@ -753,8 +740,7 @@ footer a:hover {
   margin-bottom: 40px;
 }
 
-/* Existing styles */
-/* Password Checker Styles */
+
 .password-checker-container {
     max-width: 600px;
     margin: 2rem auto;
