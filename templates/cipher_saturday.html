@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
-{% block title %}Audio Cipher Challenge{% endblock %}
+{% block title %}Cipher Saturday Challenge{% endblock %}
 
 {% block content %}
 <div class="audio-cipher-page">
-    <h1>Audio Cipher Challenge</h1>
+    <h1>Cipher Saturday Challenge</h1>
     
     <section id="introduction">
         <h2>Introduction</h2>
@@ -101,7 +101,7 @@ def get_audio_metadata(audio_path):
     except json.JSONDecodeError:
         return "Failed to decode JSON output."
 
-audio_path = "/Users/test/Desktop/Audio cipher/output_audio_new.aac"
+audio_path = "/Users/test/Desktop/Cipher Saturday/output_audio_new.aac"
 metadata = get_audio_metadata(audio_path)
 print(json.dumps(metadata, indent=4))
         </code></pre>
@@ -120,7 +120,7 @@ print(json.dumps(metadata, indent=4))
     <section id="aac-to-wav-conversion">
         <h2>AAC to WAV Conversion</h2>
         <p>The following command converts the AAC audio to a WAV file. This step is crucial to avoid lossy compression artifacts interfering with the analysis.</p>
-        <pre><code>ffmpeg -i "/Users/test/Desktop/Audio cipher/output_audio_new.aac" -acodec pcm_s16le -ac 2 "/Users/test/Desktop/Audio cipher/stereo_combined.wav"</code></pre>
+        <pre><code>ffmpeg -i "/Users/test/Desktop/Cipher Saturday/output_audio_new.aac" -acodec pcm_s16le -ac 2 "/Users/test/Desktop/Cipher Saturday/stereo_combined.wav"</code></pre>
         <h3>Stereo WAV File</h3>
         <audio controls>
             <source src="{{ url_for('static', filename='audio/stereo_combined.wav') }}" type="audio/wav">
@@ -132,13 +132,13 @@ print(json.dumps(metadata, indent=4))
         <h2>Channel Separation</h2>
         <p>For detailed audio analysis, it is often necessary to examine each stereo channel independently, as they might carry different information or characteristics important for the analysis.</p>
         <h3>Left Channel Extraction</h3>
-        <pre><code>ffmpeg -i "/Users/test/Desktop/Audio cipher/stereo_combined.wav" -af "pan=mono|c0=c0" -acodec pcm_s16le "/Users/test/Desktop/Audio cipher/mono_left.wav"</code></pre>
+        <pre><code>ffmpeg -i "/Users/test/Desktop/Cipher Saturday/stereo_combined.wav" -af "pan=mono|c0=c0" -acodec pcm_s16le "/Users/test/Desktop/Cipher Saturday/mono_left.wav"</code></pre>
         <audio controls>
             <source src="{{ url_for('static', filename='audio/mono_left.wav') }}" type="audio/wav">
             Your browser does not support the audio element.
         </audio>
         <h3>Right Channel Extraction</h3>
-        <pre><code>ffmpeg -i "/Users/test/Desktop/Audio cipher/stereo_combined.wav" -af "pan=mono|c0=c1" -acodec pcm_s16le "/Users/test/Desktop/Audio cipher/mono_right.wav"</code></pre>
+        <pre><code>ffmpeg -i "/Users/test/Desktop/Cipher Saturday/stereo_combined.wav" -af "pan=mono|c0=c1" -acodec pcm_s16le "/Users/test/Desktop/Cipher Saturday/mono_right.wav"</code></pre>
         <audio controls>
             <source src="{{ url_for('static', filename='audio/mono_right.wav') }}" type="audio/wav">
             Your browser does not support the audio element.
@@ -224,14 +224,14 @@ print(json.dumps(metadata, indent=4))
 
     <section id="next-steps">
         <h2>Next Steps</h2>
-        <p>Our next steps in analyzing this audio cipher will include:</p>
+        <p>Our next steps in analyzing this Cipher Saturday will include:</p>
         <ul>
             <li>Spectral analysis of the audio files</li>
             <li>Investigating potential steganography techniques</li>
             <li>Exploring frequency manipulation and hidden patterns</li>
             <li>Applying various decoding algorithms</li>
         </ul>
-        <p>Stay tuned for updates as we delve deeper into this audio cipher challenge!</p>
+        <p>Stay tuned for updates as we delve deeper into this Cipher Saturday challenge!</p>
     </section>
 </div>
 {% endblock %}

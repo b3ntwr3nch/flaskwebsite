@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}Robotics & Microcontroller: Self-Driving Signal-Following Car{% endblock %}
+
+{% block content %}
+<div class="project-page">
+    <h1>Robotics & Microcontroller: Self-Driving Signal-Following Car</h1>
+
+    <section id="project-overview">
+        <h2>Project Overview</h2>
+        <p>This project aims to create a self-driving car that automatically drives and follows signals. It combines robotics, microcontrollers, and software-defined radio (SDR) technology to create an intelligent, autonomous vehicle capable of navigating based on received signals.</p>
+    </section>
+
+    <section id="key-components">
+        <h2>Key Components</h2>
+        <ul>
+            <li><strong>Brain:</strong> Raspberry Pi - Acts as the central processing unit</li>
+            <li><strong>Motion Sensing:</strong> MPU-6050 - Provides gyroscope and accelerometer functionality</li>
+            <li><strong>Motor Control:</strong> DRV8833 Dual DC Motor Driver - Controls the car's motors</li>
+            <li><strong>Signal Processing:</strong> Software-Defined Radio (SDR) - For automatic signal following</li>
+        </ul>
+    </section>
+
+    <section id="mpu-6050">
+        <h2>MPU-6050 Sensor for Arduino Raspberry Pi</h2>
+        <p>The MPU-6050 is crucial for our self-driving car, providing motion sensing capabilities:</p>
+        <ul>
+            <li>Power Supply: 3V-5V</li>
+            <li>Gyroscope Range: ±250, ±500, ±1000, ±2000°/s</li>
+            <li>Acceleration Range: ±2g, ±4g, ±8g, ±16g</li>
+            <li>Communication: Standard IIC communication protocol</li>
+            <li>Built-in 16-bit AD converter, 16 bits of data output</li>
+            <li>Pin spacing: 2.54mm</li>
+        </ul>
+    </section>
+
+    <section id="drv8833">
+        <h2>DRV8833 Dual DC Gear Motor Driver Module</h2>
+        <p>The DRV8833 is essential for controlling the car's movement, replacing TB6612FNG:</p>
+        <ul>
+            <li>Input Voltage: 2.7V-10.8V</li>
+            <li>Single H-bridge Output Current: 1.5A, can control 2 DC aligned motors</li>
+            <li>Built-in protection: Overcurrent, short-circuit, under-voltage lockout, and overheating</li>
+            <li>Low-power sleep mode</li>
+            <li>Can drive DC motors under 1.5A and 4-wire stepper motors</li>
+        </ul>
+        <h3>Pin Description:</h3>
+        <ul>
+            <li>AIN1, AIN2: Logic input control ports for AO1 and AO2, level 0-5V</li>
+            <li>BIN1, BIN2: Logic input control ports for BO1 and BO2, level 0-5V</li>
+            <li>AO1, AO2, BO1, BO2: H-bridge output ports for connecting DC motors</li>
+            <li>GND: Ground</li>
+            <li>VM: Chip and motor power supply pin, voltage range 2.7V-10.8V</li>
+            <li>STBY: Standby control, connect to 5V to work; level 0-5V</li>
+        </ul>
+    </section>
+
+    <section id="sdr-integration">
+        <h2>SDR Integration for Signal Following</h2>
+        <p>The project incorporates Software-Defined Radio (SDR) technology to enable the car to follow signals automatically. This allows the vehicle to:</p>
+        <ul>
+            <li>Detect and analyze various radio signals in real-time</li>
+            <li>Adjust its path based on the strength and direction of received signals</li>
+            <li>Potentially communicate with other devices or infrastructure</li>
+        </ul>
+    </section>
+
+    <section id="self-driving-capabilities">
+        <h2>Self-Driving Capabilities</h2>
+        <p>By combining the MPU-6050 for motion sensing, the DRV8833 for motor control, and SDR for signal processing, our car achieves self-driving capabilities including:</p>
+        <ul>
+            <li>Autonomous navigation based on sensor data and received signals</li>
+            <li>Obstacle detection and avoidance</li>
+            <li>Dynamic path planning and adjustment</li>
+            <li>Signal strength-based movement and decision making</li>
+        </ul>
+    </section>
+
+    <section id="motor-control">
+        <h2>Motor Control with DRV8833</h2>
+        <p>The DRV8833 allows for precise control of two motors:</p>
+        <h3>Motor 1 Control:</h3>
+        <table>
+            <tr><th>AIN1</th><th>AIN2</th><th>Action</th></tr>
+            <tr><td>0</td><td>0</td><td>Stop</td></tr>
+            <tr><td>0</td><td>1</td><td>Backward</td></tr>
+            <tr><td>1</td><td>0</td><td>Forward</td></tr>
+        </table>
+        <h3>Motor 2 Control:</h3>
+        <table>
+            <tr><th>BIN1</th><th>BIN2</th><th>Action</th></tr>
+            <tr><td>0</td><td>0</td><td>Stop</td></tr>
+            <tr><td>0</td><td>1</td><td>Backward</td></tr>
+            <tr><td>1</td><td>0</td><td>Forward</td></tr>
+        </table>
+    </section>
+
+    <section id="future-enhancements">
+        <h2>Future Enhancements</h2>
+        <p>Potential improvements and additions to the project could include:</p>
+        <ul>
+            <li>Integration of machine learning algorithms for improved decision making</li>
+            <li>Addition of cameras for visual navigation and object recognition</li>
+            <li>Expansion of SDR capabilities for broader signal analysis and response</li>
+            <li>Implementation of swarm behavior with multiple vehicles</li>
+        </ul>
+    </section>
+</div>
+{% endblock %}
